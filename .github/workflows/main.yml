@@ -10,7 +10,6 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,19 +32,14 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Build and analyze
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: sh gradlew build sonar --info
-
+        run: sh gradlew build sonar --inf
 
       - name: Pull Blacklock Code Scanner Docker Image
         run: docker pull blacklocksec/code-scanner:latest
 
       - name: Run Blacklock Code Scanner
-        run: |
-          docker run --rm \
-          -v $(pwd):/app \
-          -e SONAR_PROJECTKEY="hello-gradle" \
-          -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
-          -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-          blacklocksec/code-scanner:latest
+        run: docker run --rm -v $(pwd):/app -e SONAR_PROJECTKEY="{{ project_key }}" -e {% verbatim %}SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}  blacklocksec/code-scanner:latest
+        
