@@ -36,12 +36,14 @@ tasks.named('test') {
 }
 
 
+
 sonar {
     properties {
-        property "sonar.projectKey", "Pwaxpsy0VvqYgJlx"
-        property "sonar.projectName", "gradle_github"
+        property "sonar.projectKey", "iJl9NtvKe4F:P89Q"
+        property "sonar.projectName", "github_grad"
     }
 }
+        
         
     
 
