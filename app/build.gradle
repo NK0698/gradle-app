@@ -41,7 +41,7 @@ sonar {
         property "sonar.projectKey", "VZ.4FaZWeZWhPJhO"
         property "sonar.projectName", "git-gradle"
     }
-}
+
         
         
     
